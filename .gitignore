@@ -1,0 +1,11 @@
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.DS_Store
+.idea
+*.iml
+logs
+out
+gen
+target
