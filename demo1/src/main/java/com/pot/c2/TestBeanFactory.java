@@ -2,6 +2,8 @@ package com.pot.c2;
 
 import jakarta.annotation.Resource;
 import java.util.Objects;
+
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.annotation.AnnotationConfigUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 /**
  * @author: Pot
@@ -120,6 +121,7 @@ public class TestBeanFactory {
 
 
         // autowired编译时会报错, 但因为在Config中注册了Bean1和Bean2, 所以还是会成功注入, 运行也不会报错
+        @Getter
         @Autowired
         private Bean2 bean2;
 
@@ -144,11 +146,6 @@ public class TestBeanFactory {
         @Resource(name = "bean4")
         private Interface1 bean3;
 
-
-
-        public Bean2 getBean2() {
-            return bean2;
-        }
 
         public Interface1 getInterface1() {
             return bean3;

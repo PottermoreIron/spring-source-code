@@ -1,7 +1,8 @@
 package com.pot.c2;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletRegistrationBean;
@@ -23,8 +24,8 @@ import org.springframework.web.servlet.mvc.Controller;
  * @description: ApplicationContext测试类
  */
 
+@Slf4j
 public class TestApplicationContext {
-    private static final Logger logger = LoggerFactory.getLogger(TestApplicationContext.class);
 
     public static void main(String[] args) {
         // xml如果加了<context:annotation-config/>, 会自动注入工具类bean
@@ -43,32 +44,32 @@ public class TestApplicationContext {
     private static void testClassPathXmlApplicationContext(){
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("b01.xml");
         for(String name : context.getBeanDefinitionNames()){
-            logger.info("ClassPath-BeanDefinitionName: {}", name);
+            log.info("ClassPath-BeanDefinitionName: {}", name);
         }
     }
 
     // 从FileSystem加载xml文件
     private static void testFileSystemXmlApplicationContext(){
-        FileSystemXmlApplicationContext context = new FileSystemXmlApplicationContext("D:\\Me\\Code\\SDE\\Project\\Test\\spring-source-code\\demo1\\src\\main\\resources\\b01.xml");
+        FileSystemXmlApplicationContext context = new FileSystemXmlApplicationContext("/Users/yecao/Project/Test/spring-source-code/demo1/src/main/resources/b01.xml");
         for(String name : context.getBeanDefinitionNames()){
-            logger.info("FileSystem-BeanDefinitionName: {}", name);
+            log.info("FileSystem-BeanDefinitionName: {}", name);
         }
     }
 
     // // 调用XmlBeanDefinitionReader#loadBeanDefinitions(Resource resource)方法
     private static void principleForCpAndFs(){
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
-        logger.info("读取之前");
+        log.info("读取之前");
         for (String name : beanFactory.getBeanDefinitionNames()) {
-            logger.info("BeanDefinitionName: {}", name);
+            log.info("BeanDefinitionName: {}", name);
         }
         // 核心
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         // reader.loadBeanDefinitions(new ClassPathResource("b01.xml"));
-        reader.loadBeanDefinitions(new FileSystemResource("D:\\Me\\Code\\SDE\\Project\\Test\\spring-source-code\\demo1\\src\\main\\resources\\b01.xml"));
-        logger.info("读取之后");
+        reader.loadBeanDefinitions(new FileSystemResource("/Users/yecao/Project/Test/spring-source-code/demo1/src/main/resources/b01.xml"));
+        log.info("读取之后");
         for (String name : beanFactory.getBeanDefinitionNames()) {
-            logger.info("BeanDefinitionName: {}", name);
+            log.info("BeanDefinitionName: {}", name);
         }
     }
 
@@ -76,7 +77,7 @@ public class TestApplicationContext {
     private static void testAnnotationConfigApplicationContext(){
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
         for (String name : context.getBeanDefinitionNames()) {
-            logger.info("Annotation-BeanDefinitionName: {}", name);
+            log.info("Annotation-BeanDefinitionName: {}", name);
         }
         System.out.println(context.getBean(Bean2.class).getBean1());
     }
@@ -136,16 +137,12 @@ public class TestApplicationContext {
 
     static class Bean1{}
 
+    @Setter
+    @Getter
     static class Bean2{
-        private Bean1 bean1;
         // xml标签调用set方法
-        public void setBean1(Bean1 bean1){
-            this.bean1 = bean1;
-        }
+        private Bean1 bean1;
 
-        public Bean1 getBean1(){
-            return bean1;
-        }
     }
 
 }
