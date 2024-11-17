@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 
 public class TestBeanFactory {
     public static void main(String[] args) {
-        /*
+        /* pot
          * beanFactory
          * 不会主动调用beanFactory后处理器
          * 不会主动调用bean后处理器
