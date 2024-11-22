@@ -23,8 +23,9 @@ public class C4Application {
         context.registerBean("bean4", Bean4.class);
 
         // 这样才能获取@Value值
-        context.getDefaultListableBeanFactory().setAutowireCandidateResolver(new ContextAnnotationAutowireCandidateResolver());
-        // 这个context会设置排序, 所以@Resource会在@Autowire之前执行
+        context.getDefaultListableBeanFactory()
+                .setAutowireCandidateResolver(new ContextAnnotationAutowireCandidateResolver());
+        // 这个context会设置排序, 所以@Resource会在@Autowired之前执行
         // 解析@Autowired和@Value
         context.registerBean(AutowiredAnnotationBeanPostProcessor.class);
 
